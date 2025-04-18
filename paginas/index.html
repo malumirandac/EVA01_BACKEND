@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ConIngenio - Consultoría y Desarrollo de Software</title>
+  <link rel="shortcut icon" href="/imagenes/con-ingenio-solo-colores.png" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body class="index">
+  <header>
+    <nav>
+      <a href="/paginas/index.html" class="logo">
+        <img src="/imagenes/logo-grande-letras-blanco.png" alt="ConIngenio Logo" />
+      </a>
+      <button id="menu-toggle" class="hamburger" aria-label="Abrir menú">&#9776;</button>
+      <ul id="nav-links" class="nav-links">
+        <li><a href="/paginas/index.html">Home</a></li>
+        <li><a href="/paginas/services.html">Servicios</a></li>
+        <li><a href="/paginas/about.html">Nosotros</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><button id="theme-toggle">Modo Noche</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <h1 id="hero-title">Cargando título...</h1>
+      <p id="hero-description">Cargando descripción</p>
+      <a href="/paginas/services.html" class="hero-btn">Acceder a los Servicios ›</a>
+    </div>
+  </section>
+
+  <main>
+
+    <section id="servicios">
+      <h2>Nuestros Servicios</h2>
+      <div class="servicios-grid" id="servicios-container">
+        <!-- Servicios se cargarán dinámicamente aquí -->
+      </div>
+    </section>
+
+    <section id="nosotros">
+        <h2>Nosotros</h2>
+        <div class="mision-vision">
+          <article>
+            <h3 id="mision-titulo">Misión</h3>
+            <p id="mision-texto">Cargando misión...</p>
+          </article>
+          <article>
+            <h3 id="vision-titulo">Visión</h3>
+            <p id="vision-texto">Cargando visión...</p>
+          </article>
+        </div>
+      </section>
+
+    <section id="contacto">
+      <h2>Contáctenos</h2>
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="nombre">Nombre completo:</label>
+          <input type="text" id="nombre" required />
+          <span class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="servicio">Servicio de interés:</label>
+          <select id="servicio" required>
+            <option value="">Seleccione un servicio</option>
+            <option value="consultoria">Consultoría Digital</option>
+            <option value="multiexperiencia">Soluciones Multiexperiencia</option>
+            <option value="ecosistemas">Evolución de Ecosistemas</option>
+            <option value="lowcode">Soluciones Low-Code</option>
+          </select>
+          <span class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="mensaje">Mensaje:</label>
+          <textarea id="mensaje" required></textarea>
+          <span class="error-message"></span>
+        </div>
+
+        <button type="submit">Enviar</button>
+      </form>
+
+      <div class="contact-info">
+        <h3>Información de Contacto</h3>
+        <p>Av. Providencia 1234, Oficina 601<br />Providencia, Santiago<br />Chile</p>
+        <p>Teléfono: +56 2 1234 5678</p>
+        <p>Email: info@coningenio.cl</p>
+        <p>Web: www.coningenio.cl</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 ConIngenio. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/js/script.js"></script>
+</body>
+</html>
