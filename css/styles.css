@@ -108,7 +108,7 @@ nav a:not(.logo):hover {
   width: 100vw;
   margin-left: calc(-50vw + 50%); /* 🔧 elimina bordes laterales */
   margin-top: 0; /* 🔧 elimina espacio sobre el hero */
-  background-image: url('/imagenes/background.jpg'); /* cambia por tu imagen */
+  background-image: url(/EVA1_BACK/imagenes/background.jpg); /* cambia por tu imagen */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

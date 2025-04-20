@@ -1,207 +1,181 @@
 // =======================
-// Cargar datos dinámicos del hero desde API con token y CORS proxy
+// Cargar datos dinámicos del hero desde API (requiere proxy y token)
 // =======================
 function cargarHeroDesdeAPI() {
-    const headerParams = {
-      'Authorization': 'Bearer ciisa'
-    };
-    const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    const apiUrl = "https://ciisa.coningenio.cl/v1/about-us/";
-  
-    $.ajax({
-      url: proxyUrl + apiUrl,
-      type: "GET",
-      dataType: "json",
-      headers: headerParams,
-      success: function (data) {
-        const primerItem = data.data[0];
-        $('#hero-title').text(primerItem.titulo.esp);
-        $('#hero-description').text(primerItem.descripcion.esp);
-      },
-      error: function (xhr, status, error) {
-        console.error("Error al cargar los datos del hero:", error);
-      }
+  fetch("../api_test.php") // sin rutas absolutas
+    .then(response => response.json())
+    .then(data => {
+      const primerItem = data.data[0];
+      document.getElementById('hero-title').textContent = primerItem.titulo.esp;
+      document.getElementById('hero-description').textContent = primerItem.descripcion.esp;
+    })
+    .catch(error => {
+      console.error("Error al cargar los datos del hero:", error);
     });
-  }
-  
-  // =======================
-  // Cargar servicios dinámicamente desde API
-  // =======================
-  function cargarServiciosDesdeAPI(modo = 'detallado') {
-    const headerParams = {
-      'Authorization': 'Bearer ciisa'
-    };
-    const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    const apiUrl = "https://ciisa.coningenio.cl/v1/services/";
-  
-    $.ajax({
-      url: proxyUrl + apiUrl,
-      type: "GET",
-      dataType: "json",
-      headers: headerParams,
-      success: function (data) {
-        const servicios = data.data;
-        const contenedor = $('.servicios-grid');
-        contenedor.empty();
-  
-        servicios.forEach(servicio => {
-          const titulo = servicio.titulo.esp;
-          const descripcion = servicio.descripcion.esp;
-  
-          let card = '';
-          if (modo === 'index') {
-            card = `
-              <article class="servicio-preview" style="background-image: url('/imagenes/servicio-${servicio.id}.jpg');">
-                <div class="overlay">
-                  <h3>${titulo}</h3>
-                  <a href="/paginas/services.html" class="btn-servicio">Más información</a>
-                </div>
-              </article>
-            `;
-          } else {
-            card = `
-              <article>
+}
+
+// =======================
+// Cargar servicios dinámicamente desde API LOCAL usando fetch
+// =======================
+function cargarServiciosDesdeAPI(modo = 'detallado') {
+  fetch('http://localhost/EVA1_BACK_API/')
+    .then(response => {
+      if (!response.ok) throw new Error("Error en la respuesta del servidor");
+      return response.json();
+    })
+    .then(result => {
+      const servicios = result.data;
+      const contenedor = document.querySelector('.servicios-grid');
+      contenedor.innerHTML = ''; // Limpiar contenido anterior
+
+      servicios.forEach(servicio => {
+        const titulo = servicio.nombre || 'Sin nombre';
+        const descripcion = servicio.descripcion || 'Descripción no disponible';
+
+        let cardHTML = '';
+
+        if (modo === 'index') {
+          cardHTML = `
+            <article class="servicio-preview" style="background-image: url('../imagenes/servicio-${servicio.id}.jpg');">
+              <div class="overlay">
                 <h3>${titulo}</h3>
-                <p>${descripcion}</p>
-              </article>
-            `;
-          }
-  
-          contenedor.append(card);
-        });
-      },
-      error: function (xhr, status, error) {
-        console.error("Error al cargar los servicios:", error);
-      }
-    });
-  }
-  
-  // =======================
-  // Cargar Misión y Visión desde API
-  // =======================
-  function cargarMisionVisionDesdeAPI() {
-    const headerParams = {
-      'Authorization': 'Bearer ciisa'
-    };
-    const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    const apiUrl = "https://ciisa.coningenio.cl/v1/about-us/";
-  
-    $.ajax({
-      url: proxyUrl + apiUrl,
-      type: "GET",
-      dataType: "json",
-      headers: headerParams,
-      success: function (data) {
-        const items = data.data;
-        const mision = items.find(item => item.titulo.esp === "Misión");
-        const vision = items.find(item => item.titulo.esp === "Visión");
-  
-        if (mision) {
-          $('#mision-titulo').text(mision.titulo.esp);
-          $('#mision-texto').text(mision.descripcion.esp);
+                <a href="services.html" class="btn-servicio">Más información</a>
+              </div>
+            </article>`;
+        } else {
+          cardHTML = `
+            <article>
+              <h3>${titulo}</h3>
+              <p>${descripcion}</p>
+            </article>`;
         }
-  
-        if (vision) {
-          $('#vision-titulo').text(vision.titulo.esp);
-          $('#vision-texto').text(vision.descripcion.esp);
-        }
-      },
-      error: function (xhr, status, error) {
-        console.error("Error al cargar misión y visión:", error);
+
+        contenedor.innerHTML += cardHTML;
+      });
+    })
+    .catch(error => {
+      console.error("Error al cargar los servicios:", error);
+    });
+}
+
+
+// =======================
+// Cargar Misión y Visión desde API (requiere proxy y token)
+// =======================
+function cargarMisionVisionDesdeAPI() {
+  fetch("../api_test.php") // usa api_test.php como proxy a la API externa
+    .then(response => response.json())
+    .then(data => {
+      const items = data.data;
+      const mision = items.find(item => item.titulo.esp === "Misión");
+      const vision = items.find(item => item.titulo.esp === "Visión");
+
+      if (mision) {
+        document.getElementById('mision-titulo').textContent = mision.titulo.esp;
+        document.getElementById('mision-texto').textContent = mision.descripcion.esp;
       }
+
+      if (vision) {
+        document.getElementById('vision-titulo').textContent = vision.titulo.esp;
+        document.getElementById('vision-texto').textContent = vision.descripcion.esp;
+      }
+    })
+    .catch(error => {
+      console.error("Error al cargar misión y visión:", error);
     });
+}
+// =======================
+// Inicialización al cargar la página
+// =======================
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('hero-title')) cargarHeroDesdeAPI();
+
+  if (document.querySelector('.servicios-grid')) {
+    const modo = document.body.classList.contains('index') ? 'index' : 'detallado';
+    cargarServiciosDesdeAPI(modo);
   }
-  
-  // =======================
-  // Inicialización al cargar la página
-  // =======================
-  $(document).ready(function () {
-    if ($('#hero-title').length) cargarHeroDesdeAPI();
-  
-    if ($('.servicios-grid').length) {
-      const modo = $('body').hasClass('index') ? 'index' : 'detallado';
-      cargarServiciosDesdeAPI(modo);
-    }
-  
-    if ($('#mision-titulo').length && $('#vision-titulo').length) {
-      cargarMisionVisionDesdeAPI();
-    }
-  
-    // Menú hamburguesa
-    $('#menu-toggle').on('click', function () {
-      $('#nav-links').toggleClass('active');
-    });
-  
-    // Tema día/noche
-    const themeToggle = $('#theme-toggle');
-    const body = $('body');
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    body.attr('data-theme', savedTheme);
-    themeToggle.text(savedTheme === 'dark' ? 'Modo Día' : 'Modo Noche');
-  
-    themeToggle.on('click', function () {
-      const nuevoTema = body.attr('data-theme') === 'dark' ? 'light' : 'dark';
-      body.attr('data-theme', nuevoTema);
-      themeToggle.text(nuevoTema === 'dark' ? 'Modo Día' : 'Modo Noche');
-      localStorage.setItem('theme', nuevoTema);
-    });
-  
-    // Validación de formulario
-    $('#contact-form').on('submit', function (e) {
+
+  if (document.getElementById('mision-titulo') && document.getElementById('vision-titulo')) {
+    cargarMisionVisionDesdeAPI();
+  }
+
+  // Menú hamburguesa
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("nav-links");
+  toggle.addEventListener("click", () => {
+    menu.classList.toggle("active");
+  });
+
+  // Tema día/noche
+  const themeToggle = document.getElementById('theme-toggle');
+  const body = document.body;
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  body.setAttribute('data-theme', savedTheme);
+  themeToggle.textContent = savedTheme === 'dark' ? 'Modo Día' : 'Modo Noche';
+
+  themeToggle.addEventListener('click', () => {
+    const nuevoTema = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    body.setAttribute('data-theme', nuevoTema);
+    themeToggle.textContent = nuevoTema === 'dark' ? 'Modo Día' : 'Modo Noche';
+    localStorage.setItem('theme', nuevoTema);
+  });
+
+  // Validación formulario
+  const form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
-  
       let isValid = true;
-      const nombre = $('#nombre');
-      const servicio = $('#servicio');
-      const mensaje = $('#mensaje');
-  
-      if (nombre.val().trim() === '') {
+
+      const nombre = document.getElementById('nombre');
+      const servicio = document.getElementById('servicio');
+      const mensaje = document.getElementById('mensaje');
+
+      if (nombre.value.trim() === '') {
         showError(nombre, 'Por favor ingrese su nombre completo');
         isValid = false;
       } else {
         clearError(nombre);
       }
-  
-      if (servicio.val() === '') {
+
+      if (servicio.value === '') {
         showError(servicio, 'Por favor seleccione un servicio');
         isValid = false;
       } else {
         clearError(servicio);
       }
-  
-      if (mensaje.val().trim() === '') {
+
+      if (mensaje.value.trim() === '') {
         showError(mensaje, 'Por favor ingrese un mensaje');
         isValid = false;
       } else {
         clearError(mensaje);
       }
-  
+
       if (isValid) {
         console.log('Formulario enviado:');
-        console.log('Nombre:', nombre.val());
-        console.log('Servicio:', servicio.find('option:selected').text());
-        console.log('Mensaje:', mensaje.val());
-  
-        $('#contact-form')[0].reset();
+        console.log('Nombre:', nombre.value);
+        console.log('Servicio:', servicio.options[servicio.selectedIndex].text);
+        console.log('Mensaje:', mensaje.value);
+
+        form.reset();
         alert('¡Gracias por su mensaje! Nos pondremos en contacto pronto.');
       }
     });
-  });
-  
-  // =======================
-  // Funciones auxiliares
-  // =======================
-  function showError(input, message) {
-    const formGroup = input.parent();
-    const errorMessage = formGroup.find('.error-message');
-    errorMessage.text(message);
-    input.addClass('error');
   }
-  
-  function clearError(input) {
-    const formGroup = input.parent();
-    const errorMessage = formGroup.find('.error-message');
-    errorMessage.text('');
-    input.removeClass('error');
-  }
-  
+});
+
+// =======================
+// Funciones auxiliares
+// =======================
+function showError(input, message) {
+  const errorSpan = input.parentElement.querySelector('.error-message');
+  errorSpan.textContent = message;
+  input.classList.add('error');
+}
+
+function clearError(input) {
+  const errorSpan = input.parentElement.querySelector('.error-message');
+  errorSpan.textContent = '';
+  input.classList.remove('error');
+}

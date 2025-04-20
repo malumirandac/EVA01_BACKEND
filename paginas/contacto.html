@@ -1,37 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ConIngenio - Consultoría y Desarrollo de Software</title>
-  <link rel="shortcut icon" href="/imagenes/con-ingenio-solo-colores.png" />
-  <link rel="stylesheet" href="/css/styles.css" />
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ConIngenio - Consultoría y Desarrollo de Software</title>
+    <link rel="shortcut icon" href="../imagenes/con-ingenio-solo-colores.png" />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
 <body>
   <header>
     <nav>
-        <a href="/paginas/index.html" class="logo">
-            <img src="/imagenes/logo-grande-letras-blanco.png" alt="ConIngenio Logo" />
-        </a>
+      <a href="index.html" class="logo">
+        <img src="../imagenes/logo-grande-letras-blanco.png" alt="ConIngenio Logo" />
+      </a>
       <button id="menu-toggle" class="hamburger" aria-label="Abrir menú">&#9776;</button>
       <ul id="nav-links" class="nav-links">
-        <li><a href="/paginas/index.html">Home</a></li>
-        <li><a href="/paginas/services.html">Servicios</a></li>
-        <li><a href="/paginas/about.html">Nosotros</a></li>
-        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Servicios</a></li>
+        <li><a href="about.html">Nosotros</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
         <li><button id="theme-toggle">Modo Noche</button></li>
       </ul>
     </nav>
   </header>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const toggle = document.getElementById("menu-toggle");
-      const menu = document.getElementById("nav-links");
-      toggle.addEventListener("click", () => {
-        menu.classList.toggle("active");
-      });
-    });
-  </script>
+
+
+  <footer>
+    <p>&copy; 2025 ConIngenio. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../js/script.js"></script>
 </body>
 </html>
